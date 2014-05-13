@@ -4,22 +4,20 @@ public class seller {
     int supply;
     double targetPrice;
     int productionRate;
+    double marketForce;
+    double elasticity;
     
-    public seller(int initS, int initTP, int initPR){
+    public seller(int initS, double initTP, int initPR, double elas){
         supply = initS;
         targetPrice = initTP;
         productionRate = initPR;
+        elasticity = elas;
         
     }
     
     public void setPricing(){
-        supply = supply + (((int)(Math.random() * 11)) - 5);
-        productionRate = productionRate + (((int)(Math.random() * 11)) - 5);
-        double marketForce = Math.atan((supply+productionRate)*0.01);
-        marketForce = marketForce +((Math.PI)/2);
-        marketForce = 2*(marketForce/Math.PI);
-        //System.out.println(marketForce);
-        
+        marketForce = productionRate * supply;
+        targetPrice = targetPrice + ((-elasticity*targetPrice)+(elasticity*marketForce));             
     }
     
     public double offer(){
@@ -29,13 +27,13 @@ public class seller {
     
     public boolean agree(double offer){ 
         if(offer < targetPrice){
-            targetPrice = targetPrice * (1-(Math.random()*0.1));
-            targetPrice = targetPrice + Math.atan(targetPrice);
+            targetPrice = targetPrice * (1-(Math.random()*0.05));
+            
         }
         if(offer > targetPrice){
-            targetPrice = targetPrice * ((Math.random()*0.1)+1);
+            targetPrice = targetPrice * ((Math.random()*0.05)+1);
         }
-        //System.out.println("eliza" + targetPrice);
+        System.out.println("eliza " + targetPrice);
         return offer >= targetPrice;    
     }
 }

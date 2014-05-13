@@ -4,21 +4,20 @@ public class buyer {
     int demand;
     double targetPrice;
     int consumptionRate;
+    double marketForce;
+    double elasticity;
     
-    public buyer(int initD, int initTP, int initCR){
+    public buyer(int initD, double initTP, int initCR, double elas){
         demand = initD;
         targetPrice = initTP;
         consumptionRate = initCR;
+        elasticity = elas;
         
     }
     
     public void setPricing(){
-        demand = demand + (((int)(Math.random() * 11)) - 5);
-        consumptionRate = consumptionRate + (((int)(Math.random() * 11)) - 5);
-        double marketForce = Math.atan((demand+consumptionRate)*0.01);
-        marketForce = marketForce +((Math.PI)/2);
-        marketForce = 2*(marketForce/Math.PI);
-        
+        marketForce = consumptionRate * demand;
+        targetPrice = targetPrice + ((-elasticity*targetPrice)+(elasticity*marketForce));               
     }
     
     public double offer(){
@@ -28,12 +27,12 @@ public class buyer {
     
     public boolean agree(double offer){ 
         if(offer > targetPrice){
-            targetPrice = targetPrice * ((Math.random()*0.1)+1);
+            targetPrice = targetPrice * ((Math.random()*0.05)+1);
         }
         if(offer < targetPrice){
-            targetPrice = targetPrice * (1-(Math.random()*0.1));
+            targetPrice = targetPrice * (1-(Math.random()*0.05));
         }
-        //System.out.println("owen " + targetPrice);
+        System.out.println("owen " + targetPrice);
         return offer <= targetPrice;        
     }
 }
