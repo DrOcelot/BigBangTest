@@ -1,23 +1,22 @@
 package sdtest;
 
 public class buyer {
-    int demand;
+    double demand;
     double targetPrice;
-    int consumptionRate;
-    double marketForce;
-    double elasticity;
+    int consumptionRate;       
+    int asset = 1000;
     
-    public buyer(int initD, double initTP, int initCR, double elas){
+    public buyer(int initD, double initTP, int initCR){
         demand = initD;
         targetPrice = initTP;
         consumptionRate = initCR;
-        elasticity = elas;
         
     }
     
     public void setPricing(){
-        marketForce = consumptionRate * demand;
-        targetPrice = targetPrice + ((-elasticity*targetPrice)+(elasticity*marketForce));               
+        consumptionRate = asset/100;
+        demand = 1000*(Math.exp(-(0.0001*asset)));
+        targetPrice = demand;               
     }
     
     public double offer(){
@@ -27,12 +26,12 @@ public class buyer {
     
     public boolean agree(double offer){ 
         if(offer > targetPrice){
-            targetPrice = targetPrice * ((Math.random()*0.05)+1);
+            targetPrice = targetPrice * ((Math.random()*1)+1);
         }
         if(offer < targetPrice){
-            targetPrice = targetPrice * (1-(Math.random()*0.05));
+            targetPrice = targetPrice * (1-(Math.random()*1));            
         }
-        System.out.println("owen " + targetPrice);
+        //System.out.println("owen TP " + targetPrice + " owen asset " + asset);
         return offer <= targetPrice;        
     }
 }
