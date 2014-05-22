@@ -27,20 +27,20 @@ public class Buyer extends Trader implements TraderBehaviour{
     public int getAsset(String as) {
         if(as.equals(assetType)){
             return buyerAsset;
-        } else throw new Error("the buyer does not buy that asset");        
+        } else throw new Error("The buyer does not buy that asset");        
     }
 
     @Override
     public void setAsset(String as, int asset) {
         if(as.equals(assetType)){
             buyerAsset = asset;
-        } else throw new Error("the buyer does not buy that asset");  
+        } else throw new Error("The buyer does not buy that asset");  
     }
 
     @Override
     public void incAsset(String as, int inc) {
         if(as.equals(assetType)){
             buyerAsset = buyerAsset + inc;
-        } else throw new Error("the buyer does not buy that asset");  
+        } else throw new Error("The buyer does not buy that asset");  
     }
 }

@@ -28,7 +28,7 @@ public class Player extends Trader implements TraderBehaviour{
         }
         if ("sb".equals(as)){
             return sb;
-        }else throw new Error("no such asset");
+        }else throw new Error("No such asset");
         
     }
     
@@ -42,7 +42,7 @@ public class Player extends Trader implements TraderBehaviour{
         }
         if ("sb".equals(as)){
             sb = a;
-        }else throw new Error("no such asset");
+        }else throw new Error("No such asset");
     }
 
     public void incAsset(String as, int inc){
@@ -54,7 +54,7 @@ public class Player extends Trader implements TraderBehaviour{
         }
         if ("sb".equals(as)){
             sb = sb+inc;
-        }else throw new Error("no such asset");
+        }else throw new Error("No such asset");
     }
 
     @Override
