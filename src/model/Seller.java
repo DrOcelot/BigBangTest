@@ -25,16 +25,22 @@ public class Seller extends Trader implements TraderBehaviour{
 
     @Override
     public int getAsset(String as) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(as.equals(assetType)){
+            return sellerAsset;
+        } else throw new Error("the seller does not sell that asset");     
     }
 
     @Override
     public void setAsset(String as, int asset) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(as.equals(assetType)){
+            sellerAsset = asset;
+        } else throw new Error("the seller does not sell that asset");    
     }
 
     @Override
     public void incAsset(String as, int inc) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(as.equals(assetType)){
+            sellerAsset = sellerAsset + inc;
+        } else throw new Error("the seller does not sell that asset");    
     }
 }

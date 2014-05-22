@@ -18,6 +18,7 @@ public class Player extends Trader implements TraderBehaviour{
         cash = cash + increment;
     }
    
+    @Override
     public int getAsset(String as){
         if ("pb".equals(as)){
             return pb;
@@ -31,6 +32,7 @@ public class Player extends Trader implements TraderBehaviour{
         
     }
     
+    @Override
     public void setAsset(String as, int a){
         if ("pb".equals(as)){
             pb = a;
