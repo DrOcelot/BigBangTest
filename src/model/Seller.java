@@ -15,35 +15,35 @@ public class Seller extends Trader implements TraderBehaviour{
     public void sellOrder() {
         offer = targetPrice; //Placeholder Logic. 
         //TODO: make seller check all other sellers and own target price.
-        //Seller then makes an offer that best fits two rules; meeting target price, undercutting other sellers.
+        //Seller then makes an offer that best fits two rules; meeting target price, undercutting other sellers. ???and cash???
     }
 
     @Override
     public void setPricing() {
-        if(sellerAsset>0){
+        if(asset>0){
             targetPrice = 1000; //placeholder value
-            //TODO: TargetPrice will be based on two factors; amount of asset held and what price the player has previously bought at.
+            //TODO: TargetPrice will be based on two factors; amount of asset held and what price the player has previously bought at. ???and cash???
         }else System.out.println("I do not have anything to sell");
     }
 
     @Override
     public int getAsset(String as) {
         if(as.equals(assetType)){
-            return sellerAsset;
+            return asset;
         } else throw new Error("The seller does not sell that asset");     
     }
 
     @Override
     public void setAsset(String as, int asset) {
         if(as.equals(assetType)){
-            sellerAsset = asset;
+            this.asset = asset;
         } else throw new Error("The seller does not sell that asset");    
     }
 
     @Override
     public void incAsset(String as, int inc) {
         if(as.equals(assetType)){
-            sellerAsset = sellerAsset + inc;
+            asset = asset + inc;
         } else throw new Error("The seller does not sell that asset");    
     }
 }

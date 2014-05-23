@@ -2,8 +2,7 @@ package model;
 
 public class Trader{
     
-    int buyerAsset = 0;
-    int sellerAsset = 0;
+    int asset = 0;
     int pb; //porkBellies
     int oj; //orangeJuice
     int sb; //soyBeans
