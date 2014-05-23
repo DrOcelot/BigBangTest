@@ -1,10 +1,6 @@
 package model;
 
 public class Player extends Trader implements TraderBehaviour{
-    float cash =10000;
-    int pb; //porkBellies
-    int oj; //orangeJuice
-    int sb; //soyBeans
     
     float getCash(){
         return cash;
@@ -69,7 +65,7 @@ public class Player extends Trader implements TraderBehaviour{
 
     @Override
     public void setPricing() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new Error("Players shouldn't be able to do this");
     }
 
 }

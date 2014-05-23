@@ -1,26 +1,29 @@
 package model;
 
 public class Seller extends Trader implements TraderBehaviour{
-    int sellerAsset=100000;
-    String assetType;
-    
+
     Seller(String as){
         assetType = as;
     }
     
     @Override
     public void buyOrder() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new Error("Sellers shouldn't be buying anything");
     }
 
     @Override
     public void sellOrder() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        offer = targetPrice; //Placeholder Logic. 
+        //TODO: make seller check all other sellers and own target price.
+        //Seller then makes an offer that best fits two rules; meeting target price, undercutting other sellers.
     }
 
     @Override
     public void setPricing() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(sellerAsset>0){
+            targetPrice = 1000; //placeholder value
+            //TODO: TargetPrice will be based on two factors; amount of asset held and what price the player has previously bought at.
+        }else System.out.println("I do not have anything to sell");
     }
 
     @Override
