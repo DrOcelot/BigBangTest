@@ -28,7 +28,8 @@ public class SRArray {
     
     public void addAndShift(){
         sellRequests.remove(0);
-        sellRequests.add(new SellRequest(assetType));        
+        sellRequests.add(new SellRequest(assetType));
+        sellRequests.get(sellRequests.size()).setTargetPrice((int)rng.nextGaussian());
     }
     
 }

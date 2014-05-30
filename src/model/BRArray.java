@@ -28,7 +28,8 @@ public class BRArray {
     
     public void addAndShift(){
         buyRequests.remove(0);
-        buyRequests.add(new BuyRequest(assetType));        
+        buyRequests.add(new BuyRequest(assetType));
+        buyRequests.get(buyRequests.size()).setTargetPrice((int)rng.nextGaussian());
     }
     
 }
