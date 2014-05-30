@@ -1,12 +1,14 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class SRArray {    
     
     ArrayList<SellRequest> sellRequests = new ArrayList();
     String assetType;
     int numberOfElements;
+    Random rng = new Random();
     
     public SRArray(String assetType, int numberOfElements){ 
         this.assetType = assetType;
@@ -17,7 +19,11 @@ public class SRArray {
     }
     
     public void setupArray(float mean, float sDev){
-        //TODO each element of the list must be assigned a target price that together fits a set standard deviation and mean
+        for(int i = 0; i<numberOfElements; i++){
+            int price;
+            price = (int)(((rng.nextGaussian())*sDev)+mean);
+            sellRequests.get(i).setTargetPrice(price);
+        }
     }
     
     public void addAndShift(){
