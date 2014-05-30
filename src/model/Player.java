@@ -1,9 +1,13 @@
 package model;
 
-public class Player extends Trader implements TraderBehaviour{
+public class Player{
     String name;
+    private float cash;
+    private int pb;
+    private int oj;
+    private int sb;
     
-    Player(String n){
+    public Player(String n){
         name = n;
     }
     
@@ -19,7 +23,6 @@ public class Player extends Trader implements TraderBehaviour{
         cash = cash + increment;
     }
    
-    @Override
     public int getAsset(String as){
         if ("pb".equals(as)){
             return pb;
@@ -33,7 +36,6 @@ public class Player extends Trader implements TraderBehaviour{
         
     }
     
-    @Override
     public void setAsset(String as, int a){
         if ("pb".equals(as)){
             pb = a;
@@ -58,8 +60,7 @@ public class Player extends Trader implements TraderBehaviour{
         }else throw new Error("No such asset");
     }
 
-    @Override
-    public void buyOrder() {        
+    public void buyFrom() {        
         //check if player has enough cash and Seller has enough asset,
         //player agrees to a seller's offer.
         //decrease player's cash by the offer amount,
@@ -67,18 +68,12 @@ public class Player extends Trader implements TraderBehaviour{
         //decrease seller's assets ???and increase seller's cash???
     }
 
-    @Override
-    public void sellOrder() {        
+    public void sellTo() {        
         //check if player has enough asset ???and Buyer has enough cash???,
         //player agrees to a buyer's offer.
         //increase player's cash by the offer amount,
         //decrease player's asset by the offer amount,
         //increse buyers asset, ???decrese buyer's cash???
-    }
-
-    @Override
-    public void setPricing() {
-        throw new Error("Players shouldn't be able to 'setPricing()'");
     }
 
 }
