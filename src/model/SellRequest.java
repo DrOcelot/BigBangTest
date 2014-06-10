@@ -52,6 +52,6 @@ public class SellRequest implements TraderBehaviour{
 
     public void setPricing(SRArray array) {
         targetPrice = targetPrice - ((targetPrice*((20 - array.getVolume())/20))/20);
-        targetPrice = targetPrice + ((targetPrice*((asset-array.getMeanAsset())/asset))/20);        
+        targetPrice = targetPrice - ((targetPrice*((asset-array.getMeanAsset())/asset))/20);        
     }
 }
