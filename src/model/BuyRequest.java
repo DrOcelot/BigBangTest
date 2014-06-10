@@ -23,24 +23,6 @@ public class BuyRequest implements TraderBehaviour{
     public String getAssetType(){
         return this.assetType;
     }
-    
-    @Override
-    public void buyOrder(BRArray array) { // offer is based on two factors; target price and trying to outbid other buyers,
-        
-        
-        
-    }
-
-    @Override
-    public void sellOrder(SRArray nothing) {
-        //buyers dont sell
-    }
-
-    @Override
-    public void setPricing() {
-        targetPrice = 1000; //placeholder value        
-        // target price is based on: previous purchases from player, and how much comoditiy the buyer has,
-    }
 
     @Override
     public int getAsset() {
@@ -51,6 +33,24 @@ public class BuyRequest implements TraderBehaviour{
     public void setAsset(int ast) {        
         this.asset = ast;
     }
+    
+    @Override
+    public void buyOrder(BRArray array) { // offer is based on two factors; target price and trying to outbid other buyers,
+        int low = array.getLowestTargetPrice();
+        offer = (low + targetPrice)/2;
+    }
+    
+    @Override
+    public void sellOrder(SRArray nothing) {
+        //buyers dont sell
+    }
+
+    @Override
+    public void setPricing() {// target price is based on: previous purchases from player, and how much comoditiy the buyer has,
+        targetPrice = (targetPrice * 105)/100;
+        targetPrice = targetPrice * 1;        // also compares his asset with the average buyerasset
+    }
+
 
     @Override
     public void incAsset(int inc) {

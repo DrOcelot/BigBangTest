@@ -43,4 +43,14 @@ public class BRArray {
         return low;
     }
     
+    public int getMeanAsset(){
+        int mean;       
+        int sum = 0;
+        for(int i = 0; i<numberOfElements; i ++){          
+           sum = sum + buyRequests.get(i).getAsset();
+        }
+        mean = sum / numberOfElements;        
+        return mean;
+    }
+    
 }
