@@ -35,7 +35,6 @@ public class SellRequest implements TraderBehaviour{
         //Seller then makes an offer that best fits two rules; meeting target price, undercutting other sell requests. 
     }
 
-    @Override
     public void setPricing() {
         if(asset>0){
             targetPrice = 1000; //placeholder value

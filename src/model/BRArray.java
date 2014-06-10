@@ -5,10 +5,20 @@ import java.util.Random;
 
 public class BRArray {
     
-    ArrayList<BuyRequest> buyRequests = new ArrayList();
-    String assetType;
-    int numberOfElements;
-    Random rng = new Random(); 
+    private final ArrayList<BuyRequest> buyRequests = new ArrayList();
+    private final String assetType;
+    private final int numberOfElements;
+    private int volume = 0 ;
+    private final Random rng = new Random(); 
+
+    public int getVolume() {
+        return volume;
+    }
+
+    public void setVolume(int volume) {
+        this.volume = volume;
+    }
+    
     
     public BRArray(String assetType, int numberOfElements){ 
         this.assetType = assetType;
@@ -53,4 +63,10 @@ public class BRArray {
         return mean;
     }
     
+    public void buyOrders(){
+        for(int i = 0; i<numberOfElements; i ++){          
+           buyRequests.get(i).buyOrder(this);
+        }
+    }
+        
 }

@@ -45,12 +45,10 @@ public class BuyRequest implements TraderBehaviour{
         //buyers dont sell
     }
 
-    @Override
-    public void setPricing() {// target price is based on: previous purchases from player, and how much comoditiy the buyer has,
-        targetPrice = (targetPrice * 105)/100;
-        targetPrice = targetPrice * 1;        // also compares his asset with the average buyerasset
+    public void setPricing(BRArray array) {// target price is based on: previous purchases from player, and how much comoditiy the buyer has,
+        targetPrice = targetPrice + ((targetPrice*((20-array.getVolume())/20))/20);
+        targetPrice = targetPrice + ((targetPrice*((asset-array.getMeanAsset())/asset))/20);        // also compares his asset with the average buyerasset
     }
-
 
     @Override
     public void incAsset(int inc) {

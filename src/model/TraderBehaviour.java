@@ -4,7 +4,6 @@ public interface TraderBehaviour {
 
     public void buyOrder(BRArray i);
     public void sellOrder(SRArray i);
-    public void setPricing();
     public int getTargetPrice();
     public void setTargetPrice(int targetPrice);
     public int getAsset();
