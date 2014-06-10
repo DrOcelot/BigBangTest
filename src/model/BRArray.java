@@ -21,8 +21,7 @@ public class BRArray {
     
     public void decVolume() {
         this.volume = volume - 1;
-    }
-    
+    }    
     
     public BRArray(String assetType, int numberOfElements){ 
         this.assetType = assetType;
@@ -46,15 +45,15 @@ public class BRArray {
         buyRequests.get(buyRequests.size()).setTargetPrice((int)rng.nextGaussian());
     }
     
-    public int getLowestTargetPrice(){
-        int low = 1000000000;
+    public int getHighestTargetPrice(){
+        int high = 0;
         
         for(int i = 0; i<numberOfElements; i++){
-            if(low > buyRequests.get(i).getTargetPrice()){
-                low = buyRequests.get(i).getTargetPrice();
+            if(high < buyRequests.get(i).getTargetPrice()){
+                high = buyRequests.get(i).getTargetPrice();
             }
         }                
-        return low;
+        return high;
     }
     
     public int getMeanAsset(){

@@ -7,7 +7,8 @@ public class MainModel {
         SRArray sellerBatch = new SRArray("pb", 15);
         buyerBatch.setupArray(1000, 100);
         buyerBatch.buyOrders();
-        System.out.println(buyerBatch.getLowestTargetPrice());
+        System.out.println("highest price: " + buyerBatch.getHighestTargetPrice());
+       
         
         
     }

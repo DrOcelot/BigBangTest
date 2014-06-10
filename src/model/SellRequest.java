@@ -23,25 +23,7 @@ public class SellRequest implements TraderBehaviour{
     public String getAssetType(){
         return assetType;
     }
-    
-    @Override
-    public void buyOrder(BRArray nothing) {
-    }
-
-    @Override
-    public void sellOrder(SRArray array) {        
-        offer = targetPrice; //Placeholder Logic. 
-        //TODO: make seller check all other sellers and own target price.
-        //Seller then makes an offer that best fits two rules; meeting target price, undercutting other sell requests. 
-    }
-
-    public void setPricing() {
-        if(asset>0){
-            targetPrice = 1000; //placeholder value
-            //TODO: TargetPrice will be based on two factors; amount of asset held and what price the player has previously bought at. 
-        }else System.out.println("I do not have anything to sell");
-    }
-
+       
     @Override
     public int getAsset() {
             return asset;   
@@ -51,9 +33,25 @@ public class SellRequest implements TraderBehaviour{
     public void setAsset(int asset) {
             this.asset = asset;   
     }
-
+        
     @Override
     public void incAsset(int inc) {
             asset = asset + inc;   
+    }
+    
+    @Override
+    public void buyOrder(BRArray nothing) {
+        //sellers dont buy
+    }
+
+    @Override
+    public void sellOrder(SRArray array) {   //Seller then makes an offer that best fits two rules; meeting target price, undercutting other sell requests.      
+        int low  = array.getLowestTargetPrice();
+        offer = (low + targetPrice)/2;        
+    }
+
+    public void setPricing(SRArray array) {
+        targetPrice = targetPrice - ((targetPrice*((20 - array.getVolume())/20))/20);
+        targetPrice = targetPrice + ((targetPrice*((asset-array.getMeanAsset())/asset))/20);        
     }
 }

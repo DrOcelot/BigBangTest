@@ -5,10 +5,11 @@ import java.util.Random;
 
 public class SRArray {    
     
-    ArrayList<SellRequest> sellRequests = new ArrayList();
-    String assetType;
-    int numberOfElements;
-    Random rng = new Random();
+    private final ArrayList<SellRequest> sellRequests = new ArrayList();
+    private final String assetType;
+    private final int numberOfElements;
+    private int volume = 0;
+    private final Random rng = new Random();
     
     public SRArray(String assetType, int numberOfElements){ 
         this.assetType = assetType;
@@ -16,6 +17,18 @@ public class SRArray {
         for(int i = 0; i<numberOfElements; i++){
             sellRequests.add(new SellRequest(assetType));
         }        
+    }
+    
+    public int getVolume() {
+        return volume;
+    }
+
+    public void incVolume() {
+        this.volume = volume + 1;
+    }
+    
+    public void decVolume() {
+        this.volume = volume - 1;
     }
     
     public void setupArray(float mean, float sDev){ //sets teh prignign of te aarray with a ginve standard deviation and mean
@@ -41,6 +54,22 @@ public class SRArray {
             }
         }                
         return low;
+    }
+    
+    public int getMeanAsset(){
+        int mean;       
+        int sum = 0;
+        for(int i = 0; i<numberOfElements; i ++){          
+           sum = sum + sellRequests.get(i).getAsset();
+        }
+        mean = sum / numberOfElements;        
+        return mean;
+    }
+    
+    public void sellOrders(){
+        for(int i = 0; i<numberOfElements; i ++){          
+           sellRequests.get(i).sellOrder(this);
+        }
     }
     
 }

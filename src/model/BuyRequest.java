@@ -35,9 +35,14 @@ public class BuyRequest implements TraderBehaviour{
     }
     
     @Override
+    public void incAsset(int inc) {
+        this.asset = this.asset + inc; 
+    }
+    
+    @Override
     public void buyOrder(BRArray array) { // offer is based on two factors; target price and trying to outbid other buyers,
-        int low = array.getLowestTargetPrice();
-        offer = (low + targetPrice)/2;
+        int high = array.getHighestTargetPrice();        
+        offer = (high + targetPrice)/2;       
     }
     
     @Override
@@ -46,12 +51,7 @@ public class BuyRequest implements TraderBehaviour{
     }
 
     public void setPricing(BRArray array) {// target price is based on: previous purchases from player, and how much comoditiy the buyer has,
-        targetPrice = targetPrice + ((targetPrice*((20-array.getVolume())/20))/20);
-        targetPrice = targetPrice + ((targetPrice*((asset-array.getMeanAsset())/asset))/20);        // also compares his asset with the average buyerasset
-    }
-
-    @Override
-    public void incAsset(int inc) {
-        this.asset = this.asset + inc; 
+        targetPrice = targetPrice + ((targetPrice*((20 - array.getVolume())/20))/20);
+        targetPrice = targetPrice - ((targetPrice*((asset-array.getMeanAsset())/asset))/20);        // also compares his asset with the average buyerasset
     }
 }
