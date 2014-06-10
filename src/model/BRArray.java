@@ -15,8 +15,12 @@ public class BRArray {
         return volume;
     }
 
-    public void setVolume(int volume) {
-        this.volume = volume;
+    public void incVolume() {
+        this.volume = volume + 1;
+    }
+    
+    public void decVolume() {
+        this.volume = volume - 1;
     }
     
     
