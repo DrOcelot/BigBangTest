@@ -10,8 +10,14 @@ public class SellRequest implements TraderBehaviour{
         this.assetType = assetType;
     }
     
+    @Override
     public void setTargetPrice(int targetPrice){
         this.targetPrice = targetPrice;
+    }
+    
+    @Override
+    public int getTargetPrice(){
+        return targetPrice;
     }
     
     public String getAssetType(){
@@ -19,11 +25,11 @@ public class SellRequest implements TraderBehaviour{
     }
     
     @Override
-    public void buyOrder() {
+    public void buyOrder(BRArray nothing) {
     }
 
     @Override
-    public void sellOrder() {        
+    public void sellOrder(SRArray array) {        
         offer = targetPrice; //Placeholder Logic. 
         //TODO: make seller check all other sellers and own target price.
         //Seller then makes an offer that best fits two rules; meeting target price, undercutting other sell requests. 

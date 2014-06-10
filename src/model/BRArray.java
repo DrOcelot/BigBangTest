@@ -18,7 +18,7 @@ public class BRArray {
         }        
     }
     
-    public void setupArray(float mean, float sDev){
+    public void setupArray(float mean, float sDev){ //Setup an array of buyrequests with random pricing of a given Standard deviation and mean
         for(int i = 0; i<numberOfElements; i++){
             int price;
             price = (int)(((rng.nextGaussian())*sDev)+mean);
@@ -26,10 +26,21 @@ public class BRArray {
         }    
     }
     
-    public void addAndShift(){
+    public void addAndShift(){//removes the oldest request and creates a new one
         buyRequests.remove(0);
         buyRequests.add(new BuyRequest(assetType));
         buyRequests.get(buyRequests.size()).setTargetPrice((int)rng.nextGaussian());
+    }
+    
+    public int getLowestTargetPrice(){
+        int low = 1000000000;
+        
+        for(int i = 0; i<numberOfElements; i++){
+            if(low > buyRequests.get(i).getTargetPrice()){
+                low = buyRequests.get(i).getTargetPrice();
+            }
+        }                
+        return low;
     }
     
 }

@@ -18,7 +18,7 @@ public class SRArray {
         }        
     }
     
-    public void setupArray(float mean, float sDev){
+    public void setupArray(float mean, float sDev){ //sets teh prignign of te aarray with a ginve standard deviation and mean
         for(int i = 0; i<numberOfElements; i++){
             int price;
             price = (int)(((rng.nextGaussian())*sDev)+mean);
@@ -26,10 +26,21 @@ public class SRArray {
         }
     }
     
-    public void addAndShift(){
+    public void addAndShift(){ //removes the oldest request and adds a new one
         sellRequests.remove(0);
         sellRequests.add(new SellRequest(assetType));
         sellRequests.get(sellRequests.size()).setTargetPrice((int)rng.nextGaussian());
+    }
+    
+    public int getLowestTargetPrice(){
+        int low = 1000000000;
+        
+        for(int i = 0; i<numberOfElements; i++){
+            if(low > sellRequests.get(i).getTargetPrice()){
+                low = sellRequests.get(i).getTargetPrice();
+            }
+        }                
+        return low;
     }
     
 }

@@ -10,8 +10,14 @@ public class BuyRequest implements TraderBehaviour{
         this.assetType = assetType;
     }
     
+    @Override
     public void setTargetPrice(int targetPrice){
         this.targetPrice = targetPrice;
+    }
+    
+    @Override
+    public int getTargetPrice(){
+        return targetPrice;
     }
 
     public String getAssetType(){
@@ -19,13 +25,14 @@ public class BuyRequest implements TraderBehaviour{
     }
     
     @Override
-    public void buyOrder() {
-        offer = targetPrice; //Placeholder logic
-        // offer is based on two factors; target price and trying to outbid other buyers,
+    public void buyOrder(BRArray array) { // offer is based on two factors; target price and trying to outbid other buyers,
+        
+        
+        
     }
 
     @Override
-    public void sellOrder() {
+    public void sellOrder(SRArray nothing) {
         //buyers dont sell
     }
 
