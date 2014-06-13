@@ -22,7 +22,10 @@ public class SRArray {
             int targetPrice;
             targetPrice = (int)(((rng.nextGaussian())*sDev)+meanPrice);
             sellRequests.add(new SellRequest(assetType, targetPrice));
-        }        
+        }
+        for(int i = 0; i<numberOfElements; i ++){          
+           sellRequests.get(i).sellOrder(this);
+        }
     }
     
     public int getVolume() {
@@ -68,12 +71,5 @@ public class SRArray {
         }
         meanAsset = sum / numberOfElements;        
         return meanAsset;
-    }
-    
-    public void sellOrders(){
-        for(int i = 0; i<numberOfElements; i ++){          
-           sellRequests.get(i).sellOrder(this);
-        }
-    }
-    
+    }    
 }

@@ -10,7 +10,7 @@ public class BRArray {
     private final int numberOfElements;
     private int volume = 0 ;
     private final Random rng = new Random();
-    private final float mean;
+    private final float meanPrice;
     private final float sDev;
 
     public int getVolume() {
@@ -27,20 +27,23 @@ public class BRArray {
     
     public BRArray(String assetType, int numberOfElements, float mean, float sDev){ 
         this.sDev = sDev;
-        this.mean = mean;
+        this.meanPrice = mean;
         this.assetType = assetType;
         this.numberOfElements = numberOfElements;
         for(int i = 0; i<numberOfElements; i++){
             int targetPrice;
             targetPrice = (int)(((rng.nextGaussian())*sDev)+mean);
             buyRequests.add(new BuyRequest(assetType, targetPrice));
-        }        
+        }
+        for(int i = 0; i<numberOfElements; i ++){          
+           buyRequests.get(i).buyOrder(this);
+        }
     }
         
     public void addAndShift(){//removes the oldest request and creates a new one
         buyRequests.remove(0);
         int targetPrice;
-        targetPrice = (int)(((rng.nextGaussian())*sDev)+mean);
+        targetPrice = (int)(((rng.nextGaussian())*sDev)+meanPrice);
         buyRequests.add(new BuyRequest(assetType, targetPrice));
         buyRequests.get(buyRequests.size()).buyOrder(this);
     }
@@ -68,12 +71,5 @@ public class BRArray {
         }
         meanAsset = sum / numberOfElements;        
         return meanAsset;
-    }
-    
-    public void buyOrders(){ //setup the buyOrders of this array, buyOrder makes a final offer based on the offers of the other buyers
-        for(int i = 0; i<numberOfElements; i ++){          
-           buyRequests.get(i).buyOrder(this);
-        }
-    }
-        
+    }     
 }
