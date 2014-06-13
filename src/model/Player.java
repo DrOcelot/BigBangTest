@@ -1,7 +1,7 @@
 package model;
 
 public class Player{
-    String name;
+    private final String name;
     private float cash;
     private int pb;
     private int oj;
@@ -11,15 +11,15 @@ public class Player{
         name = n;
     }
     
-    float getCash(){
+    public float getCash(){
         return cash;
     }
     
-    void setCash(float cashIn){
+    public void setCash(float cashIn){
         cash = cashIn;
     }
     
-    void incCash(float increment){
+    public void incCash(float increment){
         cash = cash + increment;
     }
    

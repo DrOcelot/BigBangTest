@@ -1,21 +1,27 @@
 package model;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Random;
 
 public class SRArray {    
     
-    private final ArrayList<SellRequest> sellRequests = new ArrayList();
+    private final LinkedList<SellRequest> sellRequests = new LinkedList();
     private final String assetType;
     private final int numberOfElements;
     private int volume = 0;
     private final Random rng = new Random();
+    private final float sDev;
+    private final float meanPrice;
     
-    public SRArray(String assetType, int numberOfElements){ 
+    public SRArray(String assetType, int numberOfElements, float meanPrice, float sDev){ 
+        this.sDev = sDev;
+        this.meanPrice = meanPrice;
         this.assetType = assetType;
         this.numberOfElements = numberOfElements;
         for(int i = 0; i<numberOfElements; i++){
-            sellRequests.add(new SellRequest(assetType));
+            int targetPrice;
+            targetPrice = (int)(((rng.nextGaussian())*sDev)+meanPrice);
+            sellRequests.add(new SellRequest(assetType, targetPrice));
         }        
     }
     
@@ -30,23 +36,21 @@ public class SRArray {
     public void decVolume() {
         this.volume = volume - 1;
     }
-    
-    public void setupArray(float mean, float sDev){ //sets teh prignign of te aarray with a ginve standard deviation and mean
-        for(int i = 0; i<numberOfElements; i++){
-            int price;
-            price = (int)(((rng.nextGaussian())*sDev)+mean);
-            sellRequests.get(i).setTargetPrice(price);
-        }
-    }
-    
+        
     public void addAndShift(){ //removes the oldest request and adds a new one
         sellRequests.remove(0);
-        sellRequests.add(new SellRequest(assetType));
-        sellRequests.get(sellRequests.size()).setTargetPrice((int)rng.nextGaussian());
+        int targetPrice;
+        targetPrice = (int)(((rng.nextGaussian())*sDev)+meanPrice);
+        sellRequests.add(new SellRequest(assetType, targetPrice));
+        sellRequests.get(sellRequests.size()).sellOrder(this);
     }
     
     public int getLowestTargetPrice(){
-        int low = 1000000000;
+        if (sellRequests.isEmpty()) {
+              return 0;
+        }
+        
+        int low = sellRequests.get(0).getTargetPrice();
         
         for(int i = 0; i<numberOfElements; i++){
             if(low > sellRequests.get(i).getTargetPrice()){
@@ -57,13 +61,13 @@ public class SRArray {
     }
     
     public int getMeanAsset(){
-        int mean;       
+        int meanAsset;       
         int sum = 0;
         for(int i = 0; i<numberOfElements; i ++){          
            sum = sum + sellRequests.get(i).getAsset();
         }
-        mean = sum / numberOfElements;        
-        return mean;
+        meanAsset = sum / numberOfElements;        
+        return meanAsset;
     }
     
     public void sellOrders(){

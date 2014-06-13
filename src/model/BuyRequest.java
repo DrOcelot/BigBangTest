@@ -6,15 +6,11 @@ public class BuyRequest implements TraderBehaviour{
     private int asset;
     private int offer;
 
-    public BuyRequest(String assetType){
+    public BuyRequest(String assetType, int targetPrice){
         this.assetType = assetType;
-    }
-    
-    @Override
-    public void setTargetPrice(int targetPrice){
         this.targetPrice = targetPrice;
     }
-    
+        
     @Override
     public int getTargetPrice(){
         return targetPrice;
