@@ -1,6 +1,6 @@
 package model;
 
-public class SellRequest implements TraderBehaviour{
+public class SellRequest implements Request{
     private final String assetType;
     private int asset;
     private int targetPrice;

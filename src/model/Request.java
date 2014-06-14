@@ -1,6 +1,6 @@
 package model;
 
-public interface TraderBehaviour {
+public interface Request {
 
     public void buyOrder(BRArray i);
     public void sellOrder(SRArray i);
