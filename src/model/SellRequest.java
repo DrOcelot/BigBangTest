@@ -17,6 +17,7 @@ public class SellRequest implements Request{
         return targetPrice;
     }
     
+    @Override
     public String getAssetType(){
         return assetType;
     }

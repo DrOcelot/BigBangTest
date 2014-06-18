@@ -17,6 +17,7 @@ public class BuyRequest implements Request{
         return targetPrice;
     }
 
+    @Override
     public String getAssetType(){
         return this.assetType;
     }

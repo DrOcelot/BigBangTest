@@ -89,7 +89,7 @@ public class RequestsArray {
         this.sellVolume = sellVolume - 1;
     }
     
-    private void lowestTargetPrice(){
+    private void lowestTargetPrice(){ 
         if (Requests.isEmpty()) {
               low =  0;
         }
