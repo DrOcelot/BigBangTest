@@ -2,11 +2,6 @@ package model;
 
 public interface Request {
 
-    public void buyOrder(BRArray i);
-    public void sellOrder(SRArray i);
-    public int getTargetPrice();
-    public int getAsset();
-    public void setAsset(int asset);
-    public void incAsset(int inc);
-    
+    public void order(RequestsArray requests);
+    public int getTargetPrice();    
 }

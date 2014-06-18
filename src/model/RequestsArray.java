@@ -27,12 +27,16 @@ public class RequestsArray {
             int sORb = rng.nextInt(2);
             
             if(sORb == 0){
-                Requests.add(new SellRequest(assetType, targetPrice));
+                int ass = (100*(rng.nextInt(4)+1));
+                Requests.add(new SellRequest(assetType, targetPrice, ass));
             }
             if(sORb == 1){
-                Requests.add(new BuyRequest(assetType, targetPrice));
+                int ass = (100*(rng.nextInt(4)+1));
+                Requests.add(new BuyRequest(assetType, targetPrice, ass));
             }        
         }
+        lowestTargetPrice();
+        highestTargetPrice();
     }
     
     public void addAndShift(){ //removes the oldest request and adds a new one
@@ -41,13 +45,24 @@ public class RequestsArray {
         targetPrice = (int)(((rng.nextGaussian())*sDev)+meanPrice);
         int sORb = rng.nextInt(2);
         if(sORb==0){
-            Requests.add(new SellRequest(assetType, targetPrice));
+            int ass = (100*(rng.nextInt(4)+1));
+            Requests.add(new SellRequest(assetType, targetPrice, ass));
         }
         if(sORb==1){
-            Requests.add(new BuyRequest(assetType, targetPrice));
+            int ass = (100*(rng.nextInt(4)+1));
+            Requests.add(new BuyRequest(assetType, targetPrice, ass));
         }
         System.out.println(Requests.get(numberOfElements-1));
-
+        lowestTargetPrice();
+        highestTargetPrice();
+    }
+    
+    public int getHigh(){
+        return high;
+    }
+    
+    public int getLow(){
+        return low;
     }
         
     public int getSellVolume() {
@@ -74,5 +89,33 @@ public class RequestsArray {
         this.sellVolume = sellVolume - 1;
     }
     
+    private void lowestTargetPrice(){
+        if (Requests.isEmpty()) {
+              low =  0;
+        }
+        
+        int lowest = Requests.get(0).getTargetPrice();
+        
+        for(int i = 0; i<numberOfElements; i++){
+            if(lowest > Requests.get(i).getTargetPrice()){
+                lowest = Requests.get(i).getTargetPrice();
+            }
+        }                
+        low = lowest;
+    }
     
+    private void highestTargetPrice(){
+        if (Requests.isEmpty()) {
+              high = 0;
+        }
+        
+        int highest = Requests.get(0).getTargetPrice();
+        
+        for(int i = 0; i<numberOfElements; i++){
+            if(highest < Requests.get(i).getTargetPrice()){
+                highest = Requests.get(i).getTargetPrice();
+            }
+        }                
+        high = highest;
+    }
 }
