@@ -9,7 +9,7 @@ public class Player{
     
     public Player(String n, float startingCash){
         name = n;
-        this.pb = 0;
+        this.pb = 800;
         this.oj = 0;
         this.sb = 0;
         this.cash=startingCash;
@@ -64,28 +64,33 @@ public class Player{
         }else throw new Error("No such asset");
     }
 
-    public void acceptOffer(Request RequestX){
+    public boolean acceptOffer(Request RequestX){
         float cost = RequestX.getUnitPrice()*RequestX.getAsset();
         String assetType = RequestX.getAssetType();
         
         if(RequestX instanceof BuyRequest){
             if((this.getAsset(RequestX.getAssetType())-RequestX.getAsset())<0){
                 //popup box tells user they do not have enough of that asset to perform that transaction
-                System.out.println("You do not have enough of that asset to perform that transaction"); 
+                System.out.println("You do not have enough of that asset to perform that transaction");
+                return false;
             }else if((this.getAsset(RequestX.getAssetType())-RequestX.getAsset())>=0){
                 this.incAsset(RequestX.getAssetType(), -(RequestX.getAsset()));
                 cash = cash + cost;
+                return true;
             }
         }
-        if(RequestX instanceof SellRequest){           
+        else if(RequestX instanceof SellRequest){           
             if((cash - cost) < 0){
                 //popup box tells user they do not have enough cash to perform that transaction
-                System.out.println("You do not have enough cash to perform that transaction");                
+                System.out.println("You do not have enough cash to perform that transaction");
+                return false;
             }
             else if((cash - cost) >=0){
                 cash = cash - cost;
-                this.incAsset(assetType, RequestX.getAsset());                
+                this.incAsset(assetType, RequestX.getAsset());
+                return true;
             }else throw new Error("Something went wrong with the player buying something");
-        }else throw new Error("Somehow the request is neither a buy request or a sell request");       
+        }else throw new Error("Somehow the request is neither a buy request or a sell request");
+        return false;
     }
 }

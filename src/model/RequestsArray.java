@@ -62,6 +62,37 @@ public class RequestsArray {
     
     public void removeRequest(int loc){
         Requests.remove(loc);
+        int targetPrice;
+
+        int sORb = rng.nextInt(2);
+        if(sORb==0){
+            targetPrice = (int)(((rng.nextGaussian())*sDev) + meanSellPrice + (sellVolume*sDev*0.3));
+            int ass = (100*(rng.nextInt(4)+1));
+            
+            int aType = rng.nextInt(3);                
+                switch(aType){
+                    case 0: Requests.add(new SellRequest("Pork Bellies", targetPrice, ass));
+                        break;
+                    case 1: Requests.add(new SellRequest("Frozen Orange Juice Concentrate", targetPrice, ass));
+                        break;
+                    case 2: Requests.add(new SellRequest("Soybeans", targetPrice, ass));
+                }
+        }
+        if(sORb==1){
+            targetPrice = (int)(((rng.nextGaussian())*sDev) + meanBuyPrice - (buyVolume*sDev*0.3));
+            int ass = (100*(rng.nextInt(4)+1));
+            int aType = rng.nextInt(3);                
+                switch(aType){
+                    case 0: Requests.add(new BuyRequest("Pork Bellies", targetPrice, ass));
+                        break;
+                    case 1: Requests.add(new BuyRequest("Frozen Orange Juice Concentrate", targetPrice, ass));
+                        break;
+                    case 2: Requests.add(new BuyRequest("Soybeans", targetPrice, ass));
+                }
+        }
+        printRequest(Requests.size()-1);
+        lowestSellPrice();
+        highestBuyPrice();
     }
     
     public void addAndShift(){ //removes the oldest request and adds a new one
