@@ -94,7 +94,7 @@ public class RequestsArray {
                     case 2: Requests.add(new BuyRequest("Soybeans", targetPrice, ass));
                 }
         }
-        System.out.println("new request");
+        printRequest(Requests.size()-1);
         lowestSellPrice();
         highestBuyPrice();
     }
@@ -172,14 +172,24 @@ public class RequestsArray {
     }
     
     public void printRequests(){
-        for (Request RequestX : Requests) {
+        int i = 1;
+        for (Request RequestX : Requests) {            
             if(RequestX instanceof BuyRequest){
-                System.out.println("Buying " + RequestX.getAsset() + " " + RequestX.getAssetType() + " at £" + RequestX.getUnitPrice() + " totalling £" + (RequestX.getAsset() * RequestX.getUnitPrice()));
+                System.out.println(i + ": Buying " + RequestX.getAsset() + " " + RequestX.getAssetType() + " at £" + RequestX.getUnitPrice() + " totalling £" + (RequestX.getAsset() * RequestX.getUnitPrice()));
             }
             else if(RequestX instanceof SellRequest){
-                System.out.println("Selling " + RequestX.getAsset() + " " + RequestX.getAssetType() + " at £" + RequestX.getUnitPrice() + " totalling £" + (RequestX.getAsset() * RequestX.getUnitPrice()));
+                System.out.println(i + ": Selling " + RequestX.getAsset() + " " + RequestX.getAssetType() + " at £" + RequestX.getUnitPrice() + " totalling £" + (RequestX.getAsset() * RequestX.getUnitPrice()));
             }
-            
+            i++;
+        }
+    }
+    
+    public void printRequest(int loc){
+        if(Requests.get(loc) instanceof BuyRequest){
+            System.out.println("Buying " + Requests.get(loc).getAsset() + " " + Requests.get(loc).getAssetType() + " at £" + Requests.get(loc).getUnitPrice() + " totalling £" + (Requests.get(loc).getAsset() * Requests.get(loc).getUnitPrice()));
+        }
+        else if(Requests.get(loc) instanceof SellRequest){
+            System.out.println("Selling " + Requests.get(loc).getAsset() + " " + Requests.get(loc).getAssetType() + " at £" + Requests.get(loc).getUnitPrice() + " totalling £" + (Requests.get(loc).getAsset() * Requests.get(loc).getUnitPrice()));
         }
     }
 }

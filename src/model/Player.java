@@ -7,8 +7,12 @@ public class Player{
     private int oj;
     private int sb;
     
-    public Player(String n){
+    public Player(String n, float startingCash){
         name = n;
+        this.pb = 0;
+        this.oj = 0;
+        this.sb = 0;
+        this.cash=startingCash;
     }
     
     public float getCash(){
