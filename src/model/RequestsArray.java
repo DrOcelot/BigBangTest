@@ -6,63 +6,105 @@ import java.util.Random;
 public class RequestsArray {
 
     private final LinkedList<Request> Requests = new LinkedList();
-    private final String assetType;
     private final int numberOfElements;
     private int buyVolume = 0;
     private int sellVolume = 0;
     private final Random rng = new Random();
     private final float sDev;
-    private final float meanPrice;
-    private int high;
-    private int low;
+    private float meanSellPrice;
+    private float meanBuyPrice;
+    private float highBuy;
+    private float lowSell;
     
-    public RequestsArray(String assetType, int numberOfElements, float meanPrice, float sDev) {
+    public RequestsArray(int numberOfElements, float meanSellPrice, float meanBuyPrice, float sDev) {
         this.sDev = sDev;
-        this.meanPrice = meanPrice;
-        this.assetType = assetType;
+        this.meanSellPrice = meanSellPrice;
+        this.meanBuyPrice = meanBuyPrice;
         this.numberOfElements = numberOfElements;
         for(int i = 0; i<numberOfElements; i++){
             int targetPrice;
-            targetPrice = (int)(((rng.nextGaussian())*sDev)+meanPrice);
             int sORb = rng.nextInt(2);
             
             if(sORb == 0){
+                targetPrice = (int)(((rng.nextGaussian())*sDev)+meanSellPrice);
                 int ass = (100*(rng.nextInt(4)+1));
-                Requests.add(new SellRequest(assetType, targetPrice, ass));
+                
+                int aType = rng.nextInt(3);                
+                switch(aType){
+                    case 0: Requests.add(new SellRequest("Pork Bellies", targetPrice, ass));
+                        break;
+                    case 1: Requests.add(new SellRequest("Frozen Orange Juice Concentrate", targetPrice, ass));
+                        break;
+                    case 2: Requests.add(new SellRequest("Soybeans", targetPrice, ass));
+                }
             }
             if(sORb == 1){
+                targetPrice = (int)(((rng.nextGaussian())*sDev)+meanBuyPrice);
                 int ass = (100*(rng.nextInt(4)+1));
-                Requests.add(new BuyRequest(assetType, targetPrice, ass));
+                
+                int aType = rng.nextInt(3);                
+                switch(aType){
+                    case 0: Requests.add(new BuyRequest("Pork Bellies", targetPrice, ass));
+                        break;
+                    case 1: Requests.add(new BuyRequest("Frozen Orange Juice Concentrate", targetPrice, ass));
+                        break;
+                    case 2: Requests.add(new BuyRequest("Soybeans", targetPrice, ass));
+                }
             }        
         }
-        lowestTargetPrice();
-        highestTargetPrice();
+        lowestSellPrice();
+        highestBuyPrice();
+    }
+    
+    public Request getRequest(int loc){
+        return Requests.get(loc);
+    }
+    
+    public void removeRequest(int loc){
+        Requests.remove(loc);
     }
     
     public void addAndShift(){ //removes the oldest request and adds a new one
         Requests.remove(0);
         int targetPrice;
-        targetPrice = (int)(((rng.nextGaussian())*sDev)+meanPrice);
+
         int sORb = rng.nextInt(2);
         if(sORb==0){
+            targetPrice = (int)(((rng.nextGaussian())*sDev) + meanSellPrice + (sellVolume*sDev*0.3));
             int ass = (100*(rng.nextInt(4)+1));
-            Requests.add(new SellRequest(assetType, targetPrice, ass));
+            
+            int aType = rng.nextInt(3);                
+                switch(aType){
+                    case 0: Requests.add(new SellRequest("Pork Bellies", targetPrice, ass));
+                        break;
+                    case 1: Requests.add(new SellRequest("Frozen Orange Juice Concentrate", targetPrice, ass));
+                        break;
+                    case 2: Requests.add(new SellRequest("Soybeans", targetPrice, ass));
+                }
         }
         if(sORb==1){
+            targetPrice = (int)(((rng.nextGaussian())*sDev) + meanBuyPrice - (buyVolume*sDev*0.3));
             int ass = (100*(rng.nextInt(4)+1));
-            Requests.add(new BuyRequest(assetType, targetPrice, ass));
+            int aType = rng.nextInt(3);                
+                switch(aType){
+                    case 0: Requests.add(new BuyRequest("Pork Bellies", targetPrice, ass));
+                        break;
+                    case 1: Requests.add(new BuyRequest("Frozen Orange Juice Concentrate", targetPrice, ass));
+                        break;
+                    case 2: Requests.add(new BuyRequest("Soybeans", targetPrice, ass));
+                }
         }
-        System.out.println(Requests.get(numberOfElements-1));
-        lowestTargetPrice();
-        highestTargetPrice();
+        System.out.println("new request");
+        lowestSellPrice();
+        highestBuyPrice();
     }
     
-    public int getHigh(){
-        return high;
+    public float getHigh(){
+        return highBuy;
     }
     
-    public int getLow(){
-        return low;
+    public float getLow(){
+        return lowSell;
     }
         
     public int getSellVolume() {
@@ -78,7 +120,9 @@ public class RequestsArray {
     }
     
     public void decBuyVolume() {
-        this.buyVolume = buyVolume - 1;
+        if(buyVolume -1 >=0){
+            this.buyVolume = buyVolume - 1;
+        }
     }
     
     public void incSellVolume() {
@@ -86,36 +130,56 @@ public class RequestsArray {
     }
     
     public void decSellVolume() {
-        this.sellVolume = sellVolume - 1;
+        if(sellVolume -1 >=0){
+            this.sellVolume = sellVolume - 1;
+        }
     }
     
-    private void lowestTargetPrice(){ 
+    private void lowestSellPrice(){ 
         if (Requests.isEmpty()) {
-              low =  0;
-        }
+              highBuy = 0;
+        }       
         
-        int lowest = Requests.get(0).getTargetPrice();
+        float lowest;
+        lowest = meanSellPrice;
         
-        for(int i = 0; i<numberOfElements; i++){
-            if(lowest > Requests.get(i).getTargetPrice()){
-                lowest = Requests.get(i).getTargetPrice();
+        for (Request RequestX : Requests) {
+            if (RequestX instanceof SellRequest) {
+                if (lowest < RequestX.getUnitPrice()) {
+                    lowest = RequestX.getUnitPrice();
+                }
             }
-        }                
-        low = lowest;
+        }                  
+        lowSell = lowest;
     }
     
-    private void highestTargetPrice(){
+    private void highestBuyPrice(){
         if (Requests.isEmpty()) {
-              high = 0;
-        }
+              highBuy = 0;
+        }       
         
-        int highest = Requests.get(0).getTargetPrice();
+        float highest;
+        highest = meanBuyPrice;
         
-        for(int i = 0; i<numberOfElements; i++){
-            if(highest < Requests.get(i).getTargetPrice()){
-                highest = Requests.get(i).getTargetPrice();
+        for (Request RequestX : Requests) {
+            if (RequestX instanceof BuyRequest) {
+                if (highest < RequestX.getUnitPrice()) {
+                    highest = RequestX.getUnitPrice();
+                }
             }
-        }                
-        high = highest;
+        }        
+        highBuy = highest;
+    }
+    
+    public void printRequests(){
+        for (Request RequestX : Requests) {
+            if(RequestX instanceof BuyRequest){
+                System.out.println("Buying " + RequestX.getAsset() + " " + RequestX.getAssetType() + " at £" + RequestX.getUnitPrice() + " totalling £" + (RequestX.getAsset() * RequestX.getUnitPrice()));
+            }
+            else if(RequestX instanceof SellRequest){
+                System.out.println("Selling " + RequestX.getAsset() + " " + RequestX.getAssetType() + " at £" + RequestX.getUnitPrice() + " totalling £" + (RequestX.getAsset() * RequestX.getUnitPrice()));
+            }
+            
+        }
     }
 }

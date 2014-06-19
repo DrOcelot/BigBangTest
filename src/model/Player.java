@@ -24,56 +24,64 @@ public class Player{
     }
    
     public int getAsset(String as){
-        if ("pb".equals(as)){
+        if ("Pork Bellies".equals(as)){
             return pb;
         }
-        if ("oj".equals(as)){
+        if ("Frozen Orange Juice Concentrate".equals(as)){
             return oj;
         }
-        if ("sb".equals(as)){
+        if ("Soybeans".equals(as)){
             return sb;
         }else throw new Error("No such asset");
         
     }
     
     public void setAsset(String as, int a){
-        if ("pb".equals(as)){
+        if ("Pork Bellies".equals(as)){
             pb = a;
         }
-        if ("oj".equals(as)){
+        if ("Frozen Orange Juice Concentrate".equals(as)){
             oj = a;
         }
-        if ("sb".equals(as)){
+        if ("Soybeans".equals(as)){
             sb = a;
         }else throw new Error("No such asset");
     }
 
-    public void incAsset(String as, int inc){
-        if ("pb".equals(as)){
+    private void incAsset(String as, int inc){
+        if ("Pork Bellies".equals(as)){
             pb = pb+inc;
         }
-        if ("oj".equals(as)){
+        if ("Frozen Orange Juice Concentrate".equals(as)){
             oj = oj+inc;
         }
-        if ("sb".equals(as)){
+        if ("Soybeans".equals(as)){
             sb = sb+inc;
         }else throw new Error("No such asset");
     }
 
-    public void buyFrom() {        
-        //check if player has enough cash and Seller has enough asset,
-        //player agrees to a seller's offer.
-        //decrease player's cash by the offer amount,
-        //increase player's particular asset (pb,oj,sb) by the offer amount,
-        //decrease seller's assets ???and increase seller's cash???
+    public void acceptOffer(Request RequestX){
+        float cost = RequestX.getUnitPrice()*RequestX.getAsset();
+        String assetType = RequestX.getAssetType();
+        
+        if(RequestX instanceof BuyRequest){
+            if((this.getAsset(RequestX.getAssetType())-RequestX.getAsset())<0){
+                //popup box tells user they do not have enough of that asset to perform that transaction
+                System.out.println("You do not have enough of that asset to perform that transaction"); 
+            }else if((this.getAsset(RequestX.getAssetType())-RequestX.getAsset())>=0){
+                this.incAsset(RequestX.getAssetType(), -(RequestX.getAsset()));
+                cash = cash + cost;
+            }
+        }
+        if(RequestX instanceof SellRequest){           
+            if((cash - cost) < 0){
+                //popup box tells user they do not have enough cash to perform that transaction
+                System.out.println("You do not have enough cash to perform that transaction");                
+            }
+            else if((cash - cost) >=0){
+                cash = cash - cost;
+                this.incAsset(assetType, RequestX.getAsset());                
+            }else throw new Error("Something went wrong with the player buying something");
+        }else throw new Error("Somehow the request is neither a buy request or a sell request");       
     }
-
-    public void sellTo() {        
-        //check if player has enough asset ???and Buyer has enough cash???,
-        //player agrees to a buyer's offer.
-        //increase player's cash by the offer amount,
-        //decrease player's asset by the offer amount,
-        //increse buyers asset, ???decrese buyer's cash???
-    }
-
 }

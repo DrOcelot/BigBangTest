@@ -1,8 +1,7 @@
 package model;
 
 public interface Request {
-
-    public void order(RequestsArray requests);
-    public int getTargetPrice();    
+    public int getAsset();
+    public float getUnitPrice();    
     public String getAssetType();
 }
