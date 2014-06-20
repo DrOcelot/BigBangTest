@@ -125,6 +125,12 @@ public class RequestsArray {
                     case 2: Requests.add(new BuyRequest("Soybeans", targetPrice, ass));
                 }
         }
+        if(sellVolume > 0){
+            sellVolume = sellVolume -1;
+        }
+        if(buyVolume > 0){
+            buyVolume = buyVolume -1;
+        }
         printRequest(Requests.size()-1);
         lowestSellPrice();
         highestBuyPrice();

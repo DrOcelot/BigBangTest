@@ -31,10 +31,10 @@ public class Player{
         if ("Pork Bellies".equals(as)){
             return pb;
         }
-        if ("Frozen Orange Juice Concentrate".equals(as)){
+        else if ("Frozen Orange Juice Concentrate".equals(as)){
             return oj;
         }
-        if ("Soybeans".equals(as)){
+        else if ("Soybeans".equals(as)){
             return sb;
         }else throw new Error("No such asset");
         
@@ -44,10 +44,10 @@ public class Player{
         if ("Pork Bellies".equals(as)){
             pb = a;
         }
-        if ("Frozen Orange Juice Concentrate".equals(as)){
+        else if ("Frozen Orange Juice Concentrate".equals(as)){
             oj = a;
         }
-        if ("Soybeans".equals(as)){
+        else if ("Soybeans".equals(as)){
             sb = a;
         }else throw new Error("No such asset");
     }
@@ -56,10 +56,10 @@ public class Player{
         if ("Pork Bellies".equals(as)){
             pb = pb+inc;
         }
-        if ("Frozen Orange Juice Concentrate".equals(as)){
+        else if ("Frozen Orange Juice Concentrate".equals(as)){
             oj = oj+inc;
         }
-        if ("Soybeans".equals(as)){
+        else if ("Soybeans".equals(as)){
             sb = sb+inc;
         }else throw new Error("No such asset");
     }

@@ -23,9 +23,17 @@ public class MainModel {
                 System.out.println("1 - List offers");
                 System.out.println("2 - Add and shift offers");
                 System.out.println("3 - Accept offer");
-                System.out.println("4 - Display assets");            
-                int i = scan.nextInt();
+                System.out.println("4 - Display assets"); 
+                String input = scan.nextLine();
+                int i;
+                try {
+                    i = Integer.parseInt(input);
+                } catch (NumberFormatException e) {
+                    i = 0;
+                }
                 switch(i){
+                    case 0:
+                        break;
                     case 1: 
                         batch.printRequests();
                         break;
@@ -42,7 +50,10 @@ public class MainModel {
                         System.out.println("Pork Bellies - " + user.getAsset("Pork Bellies"));
                         System.out.println("Frozen Orange Juice Concentrate - " + user.getAsset("Frozen Orange Juice Concentrate"));
                         System.out.println("Soybeans - " + user.getAsset("Soybeans"));
-                        break;                           
+                        break;
+                    case 5:
+                        System.out.println("Buy Volume is: " + batch.getBuyVolume() + " Sell Volume is: " + batch.getSellVolume());
+                        break;
                 }   
             
         }
