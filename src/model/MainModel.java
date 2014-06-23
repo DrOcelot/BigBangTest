@@ -7,7 +7,7 @@ public class MainModel {
 
     
     public static void main(String[] args) {
-        RequestsArray batch = new RequestsArray(10, 400, 300, 100);       
+        RequestsArray batch = new RequestsArray(10, 0.1f);       
         long clkCheck = System.currentTimeMillis();
         Player user = new Player("boris",1000000);
         while(true){            
@@ -64,7 +64,7 @@ public class MainModel {
             if(array.getRequest(loc)instanceof BuyRequest){
                 array.incBuyVolume();
             }
-            if(array.getRequest(loc)instanceof SellRequest){
+            else if(array.getRequest(loc)instanceof SellRequest){
                 array.incSellVolume();
             }
             array.removeRequest(loc);
